@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+venv/
+
+# Embedded vectors: large and fully regenerable with data_prep.py.
+data/*.npy
+data/*.json
+
+# Ground-truth caches: regenerable, and validated by fingerprint on load.
+results/*.npy
+results/*.meta.json
+
+# results/*.csv is deliberately NOT ignored: the deployed Streamlit app
+# reads results/cost_summary.csv, so the measured results must be committed.
+
+# Local editor/agent tooling, not part of the project.
+.claude/
+.agents/

@@ -1,0 +1,76 @@
+# Central configuration for the benchmark. Every script reads from this file
+# so that all systems and scales are tested under identical parameters.
+
+dataset:
+  name: "ms_marco"
+  hf_path: "BeIR/msmarco"       # verified structure: corpus={_id,title,text}, queries={_id,title,text}
+  hf_corpus_config: "corpus"
+  hf_queries_config: "queries"
+  embedding_model: "BAAI/bge-small-en-v1.5"   # 384-dim, run via fastembed (ONNX, CPU-friendly)
+  embedding_dim: 384
+  scales:               # number of passages indexed, per tier
+    - name: "50k"
+      n_passages: 50000
+    - name: "250k"
+      n_passages: 250000
+    - name: "1m"
+      n_passages: 1000000
+  n_queries: 200          # held-out MS MARCO queries used for latency/recall measurement
+  top_k: 10                # Recall@10, matching the paper/proposal
+
+hnsw:
+  # Same construction parameters across every system, so comparisons are fair.
+  M: 16
+  ef_construction: 200
+  ef_search_sweep: [10, 20, 40, 80, 160, 320]
+
+systems:
+  - name: "pgvector"
+    enabled: true
+  - name: "qdrant"
+    enabled: true
+  - name: "faiss"
+    enabled: true
+
+cost:
+  # AWS c6i.xlarge (4 vCPU, 8 GiB), Linux, on-demand, list price in USD
+  # (pre-tax). Source: AWS public price files (b0.p.awsstatic.com,
+  # ec2-ondemand-without-sec-sel), published 2026-10-15 -- see README for how
+  # to refresh. Every region must price the SAME instance_type, otherwise a
+  # cross-region comparison mixes hardware differences into price differences.
+  instance_type: "c6i.xlarge"
+  regions:
+    us-east-1:
+      label: "US East (N. Virginia)"
+      hourly_price_usd: 0.17
+    ap-south-1:
+      label: "Asia Pacific (Mumbai)"
+      hourly_price_usd: 0.17
+    ap-south-2:
+      label: "Asia Pacific (Hyderabad)"
+      hourly_price_usd: 0.17
+  target_recall: 0.95      # cost is computed at the ef_search value that first reaches this recall
+  hours_per_month: 720      # 24 * 30, for always-on self-hosted cost
+
+# Region the benchmark is physically executed in. Every row run_benchmark.py
+# writes is tagged with this, so a Mumbai run never overwrites a US run.
+# Override per run with `python run_benchmark.py --region ap-south-1`.
+run_region: "us-east-1"
+
+paths:
+  data_dir: "data"
+  results_dir: "results"
+
+# Postgres/pgvector and Qdrant connection info -- matches docker-compose.yml.
+pgvector:
+  host: "localhost"
+  port: 5432
+  dbname: "benchmark"
+  user: "benchmark"
+  password: "benchmark"
+  table: "passages"
+
+qdrant:
+  host: "localhost"
+  port: 6333
+  collection: "passages"

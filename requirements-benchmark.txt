@@ -1,0 +1,12 @@
+# Everything needed to run the full pipeline (data_prep.py, run_benchmark.py,
+# cost_report.py) plus the app.
+-r requirements.txt
+numpy
+faiss-cpu
+qdrant-client
+psycopg2-binary
+pgvector
+fastembed
+datasets
+tqdm
+matplotlib

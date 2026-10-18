@@ -1,0 +1,7 @@
+# Dependencies for the Streamlit decision tool (app.py) only -- this is the
+# file Streamlit Community Cloud installs. app.py just reads
+# results/cost_summary.csv, so it needs none of the benchmark's heavy deps.
+# To run the benchmark itself: pip install -r requirements-benchmark.txt
+streamlit>=1.66
+pandas
+pyyaml
