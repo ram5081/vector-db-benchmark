@@ -1,4 +1,4 @@
-measured_in,priced_for,hourly_price_usd,scale,system,met_target_recall,ef_search_used,recall,qps,cost_per_million_queries_usd,monthly_cost_at_100qps_usd,index_memory_mb,build_time_s
-unspecified,us-east-1,0.17,smoke,faiss,True,10,0.9533333333333334,12411.649741388524,0.0038,122.4,0.832,0.0304370429998925
-unspecified,ap-south-1,0.17,smoke,faiss,True,10,0.9533333333333334,12411.649741388524,0.0038,122.4,0.832,0.0304370429998925
-unspecified,ap-south-2,0.17,smoke,faiss,True,10,0.9533333333333334,12411.649741388524,0.0038,122.4,0.832,0.0304370429998925
+measured_in,priced_for,hourly_price_usd,scale,system,n_passages,met_target_recall,ef_search_used,recall,qps,p50_latency_ms,p95_latency_ms,p99_latency_ms,cost_per_million_queries_usd,monthly_cost_at_100qps_usd,index_memory_mb,build_time_s
+unspecified,us-east-1,0.17,smoke,faiss,500,True,10,0.9533333333333334,12411.649741388524,0.0153940000018337,0.3180613000495204,0.8342418600932429,0.0038,122.4,0.832,0.0304370429998925
+unspecified,ap-south-1,0.17,smoke,faiss,500,True,10,0.9533333333333334,12411.649741388524,0.0153940000018337,0.3180613000495204,0.8342418600932429,0.0038,122.4,0.832,0.0304370429998925
+unspecified,ap-south-2,0.17,smoke,faiss,500,True,10,0.9533333333333334,12411.649741388524,0.0153940000018337,0.3180613000495204,0.8342418600932429,0.0038,122.4,0.832,0.0304370429998925
